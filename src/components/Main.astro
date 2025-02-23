@@ -1,0 +1,23 @@
+---
+title: "Main";
+description: "Componente Main";
+import Skills from "./Skills.astro";
+import Sidebar from "./Sidebar.astro";
+---
+
+<div id="container" class="m-4">
+    <div class="grid grid-cols-4 sm:grid-cols-10 gap-6 px-4">
+        <!-- Sidebar -->
+        <Sidebar />
+        <!-- Principal -->
+        <div id="center" class="col-span-4 sm:col-span-7">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-primario">Sobre mi</h2>
+                <p class="text-gray-700 my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                <div class="flex space-evenly gap-5">
+                    <Skills />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

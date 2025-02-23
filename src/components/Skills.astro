@@ -1,0 +1,41 @@
+---
+title: "Skills"
+description: "Componente Skills"
+const skills = [
+  {
+    "title": "Web Design",
+    "percentage": 80,
+  },
+  {
+    "title": "Mobile App",
+    "percentage": 95,
+  },
+  {
+    "title": "Illustrator",
+    "percentage": 65,
+  },
+  {
+    "title": "Photoshop",
+    "percentage": 75,
+  }
+];
+---
+
+<div class="max-w-xl mx-auto w-full">
+    <span class="text-gray-700 uppercase font-bold tracking-wider mb-2 color-primario">Habilidades</span>
+
+    {skills.map(skill => (
+        <div class="mb-7">
+            <div class="flex justify-between py-1">
+                <span class="text-base font-semibold text-grisclaro">{skill.title}</span>
+                <span class="text-base font-semibold pr-5 text-grisclaro">{skill.percentage}%</span>
+            </div>
+            <svg class="rc-progress-line" viewBox="0 0 100 1" preserveAspectRatio="none">
+                <path class="rc-progress-line-trail" d="M 0.5,0.5 L 99.5,0.5" stroke-linecap="round" stroke="#D9D9D9" stroke-width="1" fill-opacity="0"></path>
+                <path class="rc-progress-line-path" d="M 0.5,0.5 L 99.5,0.5" stroke-linecap="round" stroke="#8febd5" stroke-width="1" fill-opacity="0"
+                    style={`stroke-dasharray: ${skill.percentage}px, 100px; stroke-dashoffset: 0px; transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s linear 0s, 0.06s;`}>
+                </path>
+            </svg>
+        </div>
+    ))}
+</div>
