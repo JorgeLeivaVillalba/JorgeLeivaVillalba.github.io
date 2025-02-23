@@ -5,5 +5,5 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
 site: 'https://jorgeleivavillalba.github.io',
 base: 'jorgeleivavillalba.github.io',
-vite: {    plugins: [tailwindcss()],  },
+vite: {    plugins: [tailwindcss()],  }
 });
