@@ -3,6 +3,8 @@ title: "Main";
 description: "Componente Main";
 import Skills from "./Skills.astro";
 import Sidebar from "./Sidebar.astro";
+import TimelineH from "./TimelineH.astro";
+import TimelineV from "./TimelineV.astro";
 ---
 
 <div id="container" class="m-4">
@@ -13,10 +15,17 @@ import Sidebar from "./Sidebar.astro";
         <div id="center" class="col-span-4 sm:col-span-7">
             <div class="bg-white shadow-lg rounded-lg p-6">
                 <h2 class="text-2xl font-bold text-center text-primario">Sobre mi</h2>
-                <p class="text-gray-700 my-4">Lorem ipsum dolor sit amet consectetur adipisicing elite</p>
+                <p class="text-gray-700 my-4">Actualmente iniciando el 2do año de la carrera Análisis de Sistemas, con sólidos conocimientos
+                    en ensamble y mantenimiento de hardware, manejo de sistemas operativos Windows y Linux,
+                    conocimiento sobre programación en lenguaje Python y diseño web HTML/CSS, con experiencia
+                    en diseño y edición en Photoshop e Illustrator, persona proactiva con valores basados en el
+                    compromiso, el orden y la eficiencia, en búsqueda de nuevas experiencias y conocimientos que
+                    me ayuden a perfeccionarme en el area informática.</p>
                 <div class="flex space-evenly gap-5">
                     <Skills />
+                    <TimelineV />
                 </div>
+                <TimelineH />
             </div>
         </div>
     </div>

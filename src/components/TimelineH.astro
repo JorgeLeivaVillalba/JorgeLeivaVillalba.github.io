@@ -1,0 +1,44 @@
+---
+const timelineH = [
+  {
+    titulo: "Educacion Primaria",
+    fecha: "2000 - 2006",
+    description: "Colegio Salesiano Monseñor Lasagna"
+  },
+  {
+    titulo: "Educacion Secundaria",
+    fecha: "2007 - 2009",
+    description: "Colegio Salesiano Monseñor Lasagna"
+  },
+  {
+    titulo: "Bachiller de Ciencias Sociales",
+    fecha: "2010 - 2012",
+    description: "Colegio Salesiano Monseñor Lasagna"
+  },
+  {
+    titulo: "Analisis de Sistemas",
+    fecha: "2021 - Actualidad",
+    description: "UCOM - Universidad Comunera"
+  }
+];
+---
+<span class="uppercase font-bold tracking-wider text-primario">Educacion</span>
+<ol class="items-center sm:flex mt-2">
+  {timelineH.map((item) => (
+    <li class="relative mb-6 sm:mb-0">
+      <div class="flex items-center">
+        <div class="z-10 flex items-center justify-center w-6 h-6 bg-secundario rounded-full ring-0 ring-white sm:ring-8 shrink-0">
+          <svg class="w-2.5 h-2.5 text-primario" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+          </svg>
+        </div>
+        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 "></div>
+      </div>
+      <div class="mt-3 sm:pe-8">
+        <h4 class="text-md font-semibold text-primario">{item.titulo}</h4>
+        <p class="text-base font-normal text-gray-500 dark:text-gray-400">{item.description}</p>
+        <time class="block mb-2 text-sm font-normal leading-none text-grisclaro">{item.fecha}</time>
+      </div>
+    </li>
+  ))}
+</ol>
