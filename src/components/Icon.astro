@@ -1,0 +1,48 @@
+---
+import { parse, HTMLElement } from 'node-html-parser';
+
+export interface Props {
+  icon: string;
+  [key: string]: any;
+}
+
+const svgCache = new Map<string, HTMLElement>();
+
+async function getSVG(name: string) {
+  const filepath = `/src/svg/${name}.svg`;
+  const files = import.meta.glob('/src/svg/**/*.svg', {
+    query: '?raw', import: 'default',
+  });
+
+  if (!svgCache.has(filepath)) {
+    if (!(filepath in files)) {
+      throw new Error(`SVG "${name}" not found at ${filepath}`);
+    }
+    const content = await files[filepath]() as string;
+    svgCache.set(filepath, parse(content) as HTMLElement);
+  }
+
+  const svgElement = svgCache.get(filepath)?.querySelector('svg');
+  if (!svgElement) {
+    throw new Error(`No valid SVG found in "${name}"`);
+  }
+
+  const { attributes, innerHTML } = svgElement;
+  return {
+    attributes,
+    innerHTML,
+  };
+}
+
+const { icon, ...props } = Astro.props as Props;
+const { attributes: baseAttributes, innerHTML } = await getSVG(icon);
+
+// Combina los atributos sin sobrescribir los del SVG
+const svgAttributes = { ...baseAttributes, ...props };
+
+---
+
+<svg
+  {...svgAttributes}
+  set:html={innerHTML}
+/>

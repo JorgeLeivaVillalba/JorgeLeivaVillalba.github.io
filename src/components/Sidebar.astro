@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro"
 ---
 <div id="side" class="col-span-4 sm:col-span-3 bg-primario shadow-lg">
     <div class="rounded-lg p-6">
@@ -11,6 +12,12 @@
                 <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">CV</a>
             </div>
         </div>
-        <hr class="my-6 border-t border-gray-300" />
+        <hr class="my-6 text-grisclaro" />
+        <div class="flex gap-4 w-60 mx-auto justify-center">
+            <Icon icon="github" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
+            <Icon icon="facebook" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
+            <Icon icon="whatsapp" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
+            <Icon icon="email" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
+        </div>
     </div>
 </div>
