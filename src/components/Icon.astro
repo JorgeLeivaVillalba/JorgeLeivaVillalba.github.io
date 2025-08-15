@@ -1,48 +1,76 @@
 ---
-import { parse, HTMLElement } from 'node-html-parser';
-
 export interface Props {
   icon: string;
-  [key: string]: any;
+  label?: string;          // nombre accesible. Si no se pasa, se marca como decorativo.
+  size?: string | number;  // controla el tamaño vía font-size (ej. "24px", "1.5rem", 24)
+  class?: string;          // clases para el contenedor (usa text-* para el color)
+  [key: string]: any;      // otros atributos para el contenedor (p. ej., title, data-*)
 }
 
-const svgCache = new Map<string, HTMLElement>();
+// Carga "eager" y ruta relativa al archivo (src/components -> ../svg)
+const files = import.meta.glob('../svg/**/*.svg', { as: 'raw', eager: true }) as Record<string, string>;
 
-async function getSVG(name: string) {
-  const filepath = `/src/svg/${name}.svg`;
-  const files = import.meta.glob('/src/svg/**/*.svg', {
-    query: '?raw', import: 'default',
-  });
-
-  if (!svgCache.has(filepath)) {
-    if (!(filepath in files)) {
-      throw new Error(`SVG "${name}" not found at ${filepath}`);
-    }
-    const content = await files[filepath]() as string;
-    svgCache.set(filepath, parse(content) as HTMLElement);
-  }
-
-  const svgElement = svgCache.get(filepath)?.querySelector('svg');
-  if (!svgElement) {
-    throw new Error(`No valid SVG found in "${name}"`);
-  }
-
-  const { attributes, innerHTML } = svgElement;
-  return {
-    attributes,
-    innerHTML,
-  };
+function resolveKey(name: string) {
+  // Soporta icon="github" o "brands/github"
+  const norm = name.replace(/^\/+/, '').replace(/\.svg$/i, '');
+  const direct = `../svg/${norm}.svg`;
+  if (direct in files) return direct;
+  const match = Object.keys(files).find((k) => k.endsWith(`/${norm}.svg`));
+  return match;
 }
 
-const { icon, ...props } = Astro.props as Props;
-const { attributes: baseAttributes, innerHTML } = await getSVG(icon);
+function getSVG(name: string) {
+  const key = resolveKey(name);
+  if (!key) {
+    console.warn(`[Icon] SVG "${name}" no encontrado en src/svg`);
+    return '';
+  }
+  return files[key] as string;
+}
 
-// Combina los atributos sin sobrescribir los del SVG
-const svgAttributes = { ...baseAttributes, ...props };
+const { icon, label, size, class: className, style: styleAttr, ...rest } = Astro.props as Props;
 
+const svgRaw = getSVG(icon);
+
+// Normaliza size -> font-size del contenedor
+const fontSize = typeof size === 'number' ? `${size}px` : size;
+const style = [fontSize ? `font-size:${fontSize}` : undefined, styleAttr].filter(Boolean).join(';') || undefined;
+
+// Accesibilidad: si no hay label, es decorativo
+const role = label ? 'img' : undefined;
+const ariaHidden = label ? undefined : 'true';
 ---
 
-<svg
-  {...svgAttributes}
-  set:html={innerHTML}
+<span
+  class={`icon-root inline-block align-middle ${className ?? ''}`.trim()}
+  role={role}
+  aria-label={label}
+  aria-hidden={ariaHidden}
+  style={style}
+  {...rest}
+  set:html={svgRaw}
 />
+
+<style>
+  .icon-root {
+    line-height: 1;
+    /* quitado: color: inherit; para no pisar text-* de Tailwind */
+  }
+  /* Dimensiones del SVG embebido */
+  :global(.icon-root > svg) {
+    width: 1em;
+    height: 1em;
+    display: block;
+  }
+  /* Preserva valores none */
+  :global(.icon-root > svg[fill="none"]) { fill: none !important; }
+  :global(.icon-root > svg[stroke="none"]) { stroke: none !important; }
+  :global(.icon-root > svg [fill="none"]) { fill: none !important; }
+  :global(.icon-root > svg [stroke="none"]) { stroke: none !important; }
+
+  /* Fuerza currentColor en el SVG raíz y en sus hijos */
+  :global(.icon-root > svg:not([fill="none"])) { fill: currentColor !important; }
+  :global(.icon-root > svg:not([stroke="none"])) { stroke: currentColor !important; }
+  :global(.icon-root > svg *:not([fill="none"])) { fill: currentColor !important; }
+  :global(.icon-root > svg *:not([stroke="none"])) { stroke: currentColor !important; }
+</style>

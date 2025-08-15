@@ -4,7 +4,7 @@ import Icon from "./Icon.astro"
 <div id="side" class="col-span-4 sm:col-span-3 bg-primario shadow-lg">
     <div class="rounded-lg p-6">
         <div class="flex flex-col items-center">
-            <img src="" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />
+            <img src="" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" alt="Foto de perfil" loading="lazy"/>
             <h1 class="text-xl font-bold text-center text-titulos">Jorge Luis <br /> Leiva Villalba</h1>
             <p class=" text-white">Software</p>
             <div class="mt-6 flex flex-wrap gap-4 justify-center">
@@ -12,12 +12,12 @@ import Icon from "./Icon.astro"
                 <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">CV</a>
             </div>
         </div>
-        <hr class="my-6 text-grisclaro" />
-        <div class="flex gap-4 w-60 mx-auto justify-center">
-            <Icon icon="github" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
-            <Icon icon="facebook" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
-            <Icon icon="whatsapp" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
-            <Icon icon="email" fill="#555267" class="hover:fill-titulos transition-colors duration-300"/>
+        <hr class="my-6  border-grisclaro" />
+        <div class="flex flex-col gap-4 w-60 mx-auto justify-center">
+          <Icon icon="github"   size="3rem" class="text-grisclaro hover:text-titulos transition-colors duration-300" label="GitHub" />
+          <Icon icon="facebook" size="1.5rem" class="text-grisclaro hover:text-titulos transition-colors duration-300" label="Facebook" />
+          <Icon icon="whatsapp" size="1.5rem" class="text-grisclaro hover:text-titulos transition-colors duration-300" label="WhatsApp" />
+          <Icon icon="email"    size="1.5rem" class="text-grisclaro hover:text-titulos transition-colors duration-300" label="Email" />
         </div>
     </div>
 </div>
